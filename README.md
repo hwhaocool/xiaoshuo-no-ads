@@ -6,20 +6,26 @@ xiaoshuo-no-ads
 大家都知道盗版小说很多广告，在公司摸鱼的时候都不敢点开小说，免得弹出来奇奇怪怪的让人脸红耳赤的广告，让人社死
 所以想着开发一个反向代理的web页面，自动屏蔽广告
 
+[demo地址](http://xiaoshuo.guojiang.ltd)
+
 ## 运行
 因为是golang写的，直接运行即可
 
 linux
 ```
-./xiaoshuo
+./xiaoshuo-amd64-linux
 ```
 
 windows
 ```
-./xiaoshuo.exe
+./xiaoshuo-amd64-windows.exe
 ```
 
-## 部署
+
+## 使用
+运行起来之后，两种用法
+1. 复制小说网站地址，粘贴进来，点击转换，再点击新的地址即可
+2. 打开小说网站，在地址栏最前面添加 你的域名 即可
 
 ## 交叉编译
 
@@ -37,13 +43,4 @@ mac
 ```
 GOOS=darwin GOARCH=amd64 go build -o bin/xiaoshuo-amd64-darwin
 ```
-
-## 下载的代理
-```
-export GOPROXY=https://proxy.golang.com.cn,direct
-```
-
-### 日志
-
-
 
