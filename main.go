@@ -16,7 +16,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
-	"xiaoshuo/httpMgr"
 	"xiaoshuo/myLog"
 
 	"github.com/PuerkitoBio/goquery"
@@ -63,11 +62,8 @@ func main() {
 		return nil // return nil if it is success
 	})
 
-	color.Yellowln("Simple to use color")
-	color.Red.Println("Simple to use color")
-
 	//初始化连接池
-	httpMgr.Init()
+	// httpMgr.Init()
 
 	//打印ip
 	logger.Info("local ip", zap.String("ip", getLocalIP()))
@@ -83,8 +79,6 @@ func main() {
 
 	// 健康检查
 	router.HEAD("/", nginxHealthCheck)
-
-	// router.GET("/", welcome)
 
 	router.LoadHTMLGlob("html/*")
 	router.GET("/", func(c *gin.Context) {
@@ -374,26 +368,6 @@ func genRequest(ctx *gin.Context) *req.Request {
 				EnableDump()
 }
 
-func logBefore(ctx *gin.Context) {
-	logger.Info("proxy request",
-		zap.String("method", ctx.Request.Method),
-		zap.String("host", ctx.Request.Host),
-		zap.String("url", ctx.Request.RequestURI))
-}
-
-func logAfter(ctx *gin.Context) {
-	host := ctx.Request.Host
-
-	logger.Info("receive "+ctx.Request.Method,
-		zap.String("url", ctx.Request.RequestURI),
-		zap.String("host", host),
-		// zap.Int64("request cost(1/10 ms)", cost),
-		zap.String("ip", ctx.Request.Header.Get("X-Forwarded-For")),
-		zap.String("UA", ctx.Request.Header.Get("User-Agent")),
-		zap.Int("res-code", ctx.Writer.Status()),
-	)
-}
-
 func myNoRoute2(ctx *gin.Context) {
 
 	uri := ctx.Request.RequestURI
@@ -463,24 +437,6 @@ func anyweb(ctx *gin.Context, uri string) {
 
 }
 
-func logRequest(desc string, ctx *gin.Context) {
-
-	host := ctx.Request.Host
-
-	logger.Info("receive "+ctx.Request.Method,
-		zap.String("url", ctx.Request.RequestURI),
-		zap.String("host", host),
-		// zap.Int64("request cost(1/10 ms)", cost),
-		zap.String("ip", ctx.Request.Header.Get("X-Forwarded-For")),
-		zap.String("UA", ctx.Request.Header.Get("User-Agent")),
-		zap.Int("res-code", ctx.Writer.Status()),
-	)
-
-	logger.Debug("reverse_request_debug_info",
-		zap.Any("all_headers", ctx.Request.Header),
-	)
-}
-
 // slb 健康检查接口使用 head 方法
 func nginxHealthCheck(ctx *gin.Context) {
 	ctx.JSON(200, gin.H{
@@ -489,20 +445,6 @@ func nginxHealthCheck(ctx *gin.Context) {
 	})
 
 	ctx.Abort()
-}
-
-// proxy2TS 请求发往 touchSprite
-func proxy2TS(c *gin.Context) {
-
-	// 改成正确的域名和path
-	target := "https://m.31xiaoshuo.com/"
-	c.Request.Host = "m.31xiaoshuo.com"
-	c.Request.URL.Scheme = "https"
-	// c.Request.RequestURI
-
-	proxy := httpMgr.MyReverseProxy(target)
-
-	proxy.ServeHTTP(c.Writer, c.Request)
 }
 
 // getLocalIP 得到local ip
@@ -520,26 +462,6 @@ func getLocalIP() string {
 		}
 	}
 	return ""
-}
-
-// request 打印日志信息
-func requestLog(ctx *gin.Context, proxyName string, cost int64) {
-
-	// 记录反向代理的规则结果和 请求信息和耗时
-	logger.Info("proxy-e reverse request",
-		zap.String("method", ctx.Request.Method),
-		zap.String("url", ctx.Request.RequestURI),
-		zap.String("host", ctx.Request.Host),
-		zap.String("upstream name", proxyName),
-		zap.Int64("request cost(1/10 ms)", cost),
-		zap.String("fjk-trace-id", ctx.Request.Header.Get("fjk-trace-id")),
-		zap.String("x-request-id", ctx.Request.Header.Get("x-request-id")),
-		zap.Int("response status", ctx.Writer.Status()),
-	)
-
-	logger.Debug("reverse_request_debug_info",
-		zap.Any("all_headers", ctx.Request.Header),
-	)
 }
 
 func ginBodyLogMiddleware() gin.HandlerFunc {
