@@ -38,9 +38,6 @@
             } else if(hostname.endsWith("ibiquge.net")){
                 update("/biquge", path);
             } else {
-                // $("#result").text("暂未支持该网站");
-                // $("#result").attr("href", "/");
-
                 addr = "/" + addr;
 
                 var newurl = window.location.host +  addr;
@@ -48,21 +45,25 @@
                 $("#result").attr("href", addr);
             }
 
-            console.log();
         }
 
         function update(prefix, path) {
-            
             var newpath = prefix + path;
             var newurl = window.location.host + newpath;
             $("#result").text(newurl);
             $("#result").attr("href",newpath);
         }
+
+        window.onload = function() {
+            var text = $("#title2").text();
+            var a2 = text.replaceAll("#", window.location.host);
+            console.log(a2)
+            $("#title2").text(a2);
+        }
     </script>
 </head>
 
 <body>
-
     <div class="bui-page">
         <header class="bui-bar">
             <div class="bui-bar-main">土拨鼠看小说</div>
@@ -74,7 +75,7 @@
             <div class="my-title">使用说明</div>
             <div class="section-title">两种用法</div>
             <div class="section-title">1. 复制小说网站地址，粘贴进来，点击转换，再点击新的地址即可</div>
-            <div class="section-title">2. 打开小说网站，在地址栏最前面添加 xiaoshuo.guojiang.ltd 即可</div>
+            <div id="title2" class="section-title">2. 打开小说网站，在地址栏最前面添加 # 即可</div>
             <div class="line"></div>
 
             <ul class="bui-list">
@@ -112,31 +113,20 @@
                         <p class="item-text">2022年9月3日</p>
                     </a>
                 </li>
-
                 <li class="bui-btn">
                     <a>
                         <h3 class="item-title"><span class="success-reverse">【已支持】</span>笔趣阁 m.ibiquge.net</h3>
                         <p class="item-text">2022年9月4日</p>
                     </a>
                 </li>
-
                 <li class="bui-btn">
                     <a>
                         <h3 class="item-title"><span class="warning-reverse">【已支持】【待测试】</span>大部分网站都支持，待测试</h3>
                         <p class="item-text">2022年9月4日</p>
                     </a>
                 </li>
-
-
             </ul>
         </main>
     </div>
-
-    <script>
-
-
-
-    </script>
 </body>
-
 </html>
