@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>土拨鼠看小说</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="https://unpkg.com/buijs@latest/lib/latest/bui.css">
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.1/jquery.js"></script>
+    <style>
+
+        footer.bui-bar {
+            background: #39a4ff;
+            color: #fff;
+            font-size: .34rem;
+        }
+
+        .myframe {
+            width: 100%;
+            height: 90vh;
+        }
+
+    </style>
+    <script type="text/javascript">
+        function exchange() {
+            var addr = $("#address").val();
+            var myURL = new URL(addr);
+            var hostname = myURL.hostname;
+            var path = myURL.pathname;
+
+            if(hostname.endsWith("31xiaoshuo.com") ) {
+                var newpath = "/31xiaoshuo" + path;
+                var newurl = window.location.host + newpath;
+                $("#result").text(newurl);
+                $("#result").attr("href",newpath);
+            } else{
+
+            }
+
+            console.log();
+        }
+
+        function load(){
+            // $("xiaoshuo")
+        }
+    </script>
+</head>
+
+<body>
+
+    <div class="bui-page">
+        <header class="bui-bar">
+            <div class="bui-bar-main">土拨鼠看小说</div>
+            <div class="bui-bar-right">
+            </div>
+        </header>
+        <main>
+
+            <div>
+                <!-- <iframe src="/i/eg_landscape.jpg"></iframe> -->
+                <iframe class="myframe" id="xiaoshuo" onload="load()" src="/31xiaoshuo/34/34555/67346338.html">
+                    <p>你的浏览器不支持 iframes.</p>
+                    </iframe>
+            </div>
+           
+        </main>
+        <footer class="bui-bar">
+            <div >土拨鼠看小说</div>
+            <div class="bui-bar-right">
+            </div>
+        </footer>
+    </div>
+
+    <script>
+
+
+
+    </script>
+</body>
+
+</html>
