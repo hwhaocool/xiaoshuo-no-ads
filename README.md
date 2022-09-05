@@ -21,6 +21,8 @@ windows
 ./xiaoshuo-amd64-windows.exe
 ```
 
+然后访问 `localhost:8090` 就可以看到效果了
+
 
 ## 使用
 运行起来之后，两种用法
